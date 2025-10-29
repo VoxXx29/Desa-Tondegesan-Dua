@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Desa Tondegesan Dua</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+        body {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .map-placeholder {
+            background: linear-gradient(45deg, #f0f9ff 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f0f9ff 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f0f9ff 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f0f9ff 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        .structure-card {
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .structure-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        .mission-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+        }
+        .mission-list li::before {
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: #34D399; /* Emerald 400 */
+            font-size: 16px;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="bg-gray-50 font-sans"><!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16"><!-- Logo and Brand -->
+     <div class="flex items-center">
+      <div class="flex-shrink-0 flex items-center">
+       <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center text-white text-lg mr-3">
+        🏘️
+       </div>
+       <h1 id="nav-village-name" class="text-lg font-bold text-gray-800">Desa Tondegesan Dua</h1>
+      </div>
+     </div><!-- Desktop Navigation -->
+     <div class="hidden md:block">
+      <div class="flex items-center space-x-1"><a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200" onclick="showPage('home')"> Beranda </a> <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('profile')"> Profil &amp; Sejarah </a> <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('structure')"> Struktur </a> <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('map')"> Peta Desa </a> <a href="#" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('contact')"> Kontak </a>
+      </div>
+     </div><!-- Mobile menu button -->
+     <div class="md:hidden"><button id="mobile-menu-btn" class="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+       </svg></button>
+     </div>
+    </div>
+   </div><!-- Mobile Navigation Menu -->
+   <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+    <div class="px-2 pt-2 pb-3 space-y-1"><a href="#" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-white bg-blue-600" onclick="showPage('home'); toggleMobileMenu()"> Beranda </a> <a href="#" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('profile'); toggleMobileMenu()"> Profil &amp; Sejarah </a> <a href="#" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('structure'); toggleMobileMenu()"> Struktur Pemerintahan </a> <a href="#" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('map'); toggleMobileMenu()"> Peta Desa </a> <a href="#" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200" onclick="showPage('contact'); toggleMobileMenu()"> Kontak Kami </a>
+    </div>
+   </div>
+  </nav><!-- Main Content -->
+  <main class="min-h-screen"><!-- Home Page -->
+   <div id="home-page" class="page-content"><!-- Hero Section -->
+    <section class="text-white py-20" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('img/lovepik-country-road-background-image_401710333.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 id="hero-village-name" class="text-4xl md:text-6xl font-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Desa Tondegesan Dua</h1>
+      <p id="hero-tagline" class="text-xl md:text-2xl mb-8 opacity-90" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Bersama Membangun Masa Depan yang Cerah</p><button onclick="showPage('profile')" class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300"> Jelajahi Desa Kami </button>
+     </div>
+    </section><!-- Quick Info Cards -->
+    <section class="py-16 bg-white">
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+       <div class="card-hover bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center">
+        <div class="text-3xl mb-4">
+         🏛️
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Profil Desa</h3>
+        <p class="text-gray-600 text-sm">Mengenal lebih dekat desa kami</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center">
+        <div class="text-3xl mb-4">
+         📜
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Sejarah</h3>
+        <p class="text-gray-600 text-sm">Perjalanan panjang desa kami</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center">
+        <div class="text-3xl mb-4">
+         👥
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Pemerintahan</h3>
+        <p class="text-gray-600 text-sm">Struktur organisasi desa</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center">
+        <div class="text-3xl mb-4">
+         🗺️
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Peta Desa</h3>
+        <p class="text-gray-600 text-sm">Lokasi dan wilayah desa</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Profile & History Page -->
+   <div id="profile-page" class="page-content hidden bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+     <div class="fade-in space-y-20"><!-- Profil Desa -->
+      <section class="bg-white rounded-2xl shadow-lg overflow-hidden p-8 md:p-12">
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="text-center">
+         <div class="text-8xl text-blue-500">
+          <i class="fas fa-landmark"></i>
+         </div>
+         <h2 class="text-3xl font-bold text-gray-800 mt-4">Profil Desa</h2>
+        </div>
+        <div class="md:col-span-2">
+         <p id="profile-content" class="text-gray-700 leading-relaxed text-lg text-justify">Desa Tondegesan II terletak di Kecamatan Kawangkoan, Kabupaten Minahasa, Provinsi Sulawesi Utara. Berada di dataran tinggi, desa ini memiliki kondisi alam yang sejuk dan sangat mendukung untuk kegiatan pertanian. Dengan luas wilayah sekitar 700 hektar, sebagian besar lahan dimanfaatkan untuk pertanian dan perkebunan, sementara sekitar 192 hektar merupakan wilayah pemukiman. Mayoritas penduduknya beragama Kristen Protestan (GMIM) dan bekerja sebagai petani atau pekebun. Masyarakat Desa Tondegesan II dikenal menjunjung tinggi nilai-nilai kekeluargaan dan memiliki semangat gotong royong yang kuat, dengan tingkat partisipasi yang tinggi dalam berbagai kegiatan kemasyarakatan.</p>
+        </div>
+       </div>
+      </section><!-- Sejarah Desa -->
+      <section class="bg-white rounded-2xl shadow-lg overflow-hidden p-8 md:p-12">
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div class="md:col-span-2">
+         <p id="history-content" class="text-gray-700 leading-relaxed text-lg text-justify">Sejarah Desa Tondegesan Dua berawal dari sebuah pemukiman bernama LAUSAN. Akibat sering dilanda wabah penyakit, masyarakat pada masa itu memutuskan untuk pindah ke lokasi baru yang lebih aman. Kampung baru ini kemudian dinamai TONDEGESAN, yang berasal dari bahasa Tontemboan "TOU E REGES" yang berarti 'orang yang dianginkan' atau mencari suasana baru yang terhindar dari penyakit. Desa Tondegesan secara resmi disahkan pada tahun 1848. Seiring dengan pertumbuhan wilayah dan jumlah penduduk, pada tanggal 2 November 2010, Desa Tondegesan Dua resmi dibentuk sebagai desa definitif hasil pemekaran dari desa induk. Sejak dibentuk, desa ini telah dipimpin oleh beberapa Hukum Tua yang berkontribusi pada pembangunan desa.</p>
+        </div>
+        <div class="text-center order-first md:order-last">
+         <div class="text-8xl text-green-500">
+          <i class="fas fa-book-open"></i>
+         </div>
+         <h2 class="text-3xl font-bold text-gray-800 mt-4">Sejarah Desa</h2>
+        </div>
+       </div>
+      </section><!-- Visi Misi -->
+      <section class="bg-white rounded-2xl shadow-lg overflow-hidden p-8 md:p-12">
+       <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800">Visi & Misi Desa</h2>
+        <p class="text-lg text-gray-500 mt-2">Arah dan Tujuan Pembangunan Desa Tondegesan Dua</p>
+       </div>
+       <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start"><!-- Visi -->
+        <div class="lg:col-span-2 text-center p-6 bg-purple-50 rounded-xl border border-purple-200">
+         <div class="text-6xl text-purple-500 mb-4">
+          <i class="fas fa-bullseye"></i>
+         </div>
+         <h3 class="text-3xl font-bold mb-4 text-purple-800">Visi</h3>
+         <p id="vision-content" class="text-gray-700 text-lg leading-relaxed font-semibold">"TERWUJUDNYA DESA TONDEGESAN DUA YANG RELIGIUS, AMAN, SEJAHTERA, TRANSPARAN DAN AKUNTABEL"</p>
+        </div><!-- Misi -->
+        <div class="lg:col-span-3">
+         <div class="flex items-center gap-4 mb-6">
+          <div class="text-5xl text-orange-500">
+           <i class="fas fa-rocket"></i>
+          </div>
+          <h3 class="text-3xl font-bold text-orange-800">Misi</h3>
+         </div>
+         <div id="mission-content" class="text-gray-700 leading-relaxed">
+          <ul class="mission-list text-md">
+           <li>Mendorong seluruh masyarakat Desa Tondegesan Dua untuk aktif dalam kegiatan keagamaan sesuai agama yang dianut dalam rangka meningkatkan keimanan dan ketakwaan kepada Tuhan Yang Maha Esa.</li>
+           <li>Menunjang kegiatan-kegiatan yang berbau keagamaan dalam ruang lingkup masyarakat Desa Tondegesan Dua dan Gereja.</li>
+           <li>Mengaktifkan sistem keamanan desa yang ada di tiap jaga untuk berkolaborasi dengan masyarakat dan instansi terkait dalam rangka memberikan rasa aman dan nyaman kepada masyarakat.</li>
+           <li>Membangun Kantor Desa secara gotong royong dalam rangka meningkatkan pelayanan kepada masyarakat.</li>
+           <li>Meningkatkan mutu petani melalui koperasi desa dalam rangka memajukan pertanian yang merupakan sektor andalan.</li>
+           <li>Berkolaborasi dengan Pemerintah Pusat, Pemerintah Daerah, dan masyarakat untuk memajukan infrastruktur pertanian dan pemukiman.</li>
+           <li>Memajukan bidang peternakan baik perorangan atau kelompok menjadi sektor andalan masyarakat desa.</li>
+           <li>Membangkitkan semangat dan usaha Karang Taruna, BUMDes, dan semua organisasi masyarakat dalam rangka peningkatan kesejahteraan.</li>
+           <li>Terbuka kepada masyarakat tentang sistem pengelolaan keuangan desa.</li>
+           <li>Melaporkan seluruh kegiatan yang terjadi di ruang lingkup pemerintah desa secara transparan dan akuntabel.</li>
+           <li>Melibatkan seluruh elemen masyarakat untuk menentukan arah kebijakan pembangunan desa melalui musyawarah desa.</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </section>
+     </div>
+    </div>
+   </div><!-- Structure Page -->
+   <div id="structure-page" class="page-content hidden bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+     <div class="fade-in">
+      <div class="text-center mb-16">
+       <h2 class="text-4xl font-bold text-gray-800 mb-4">Struktur Pemerintahan Desa</h2>
+       <p class="text-xl text-gray-600">Periode 2022-2027</p>
+      </div><!-- Pimpinan Desa -->
+      <div class="flex justify-center mb-16">
+       <div class="structure-card bg-white rounded-2xl shadow-xl p-8 text-center max-w-lg w-full">
+        <div class="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-5 flex items-center justify-center text-white text-5xl shadow-lg">
+         <i class="fas fa-user-tie"></i>
+        </div>
+        <h3 class="text-3xl font-bold text-gray-800 mb-2">Hukum Tua</h3>
+        <p class="text-xl text-blue-600 font-semibold mb-3">Reygens Malonda Goni</p>
+        <p class="text-gray-500 italic">"Pemimpin dan Penanggung Jawab Utama Pemerintahan Desa"</p>
+       </div>
+      </div><!-- Perangkat Desa Inti -->
+      <h3 class="text-2xl font-bold text-center text-gray-700 mb-10">Perangkat Desa Inti</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-16">
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl">
+         <i class="fas fa-pen-to-square"></i>
+        </div>
+        <h4 class="text-xl font-bold text-gray-800 mb-2">Sekretaris Desa</h4>
+        <p class="text-lg text-blue-600 font-semibold mb-2">Hizkia Kalengkongan, S.Pd</p>
+        <p class="text-gray-600 text-sm">Administrasi dan Kearsipan</p>
+       </div>
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl">
+         <i class="fas fa-sitemap"></i>
+        </div>
+        <h4 class="text-xl font-bold text-gray-800 mb-2">Ketua LPMD</h4>
+        <p class="text-lg text-blue-600 font-semibold mb-2">Alfian M Umbas</p>
+        <p class="text-gray-600 text-sm">Lembaga Pemberdayaan Masyarakat Desa</p>
+       </div>
+      </div><!-- Kepala Jaga -->
+      <h3 class="text-2xl font-bold text-center text-gray-700 mb-10">Kepala Jaga Wilayah</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-16 h-16 bg-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl">
+         <i class="fas fa-users"></i>
+        </div>
+        <h4 class="text-lg font-bold text-gray-800 mb-2">Kepala Jaga I</h4>
+        <p class="text-blue-600 font-semibold mb-2">Andri Rembet</p>
+       </div>
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-16 h-16 bg-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl">
+         <i class="fas fa-users"></i>
+        </div>
+        <h4 class="text-lg font-bold text-gray-800 mb-2">Kepala Jaga II</h4>
+        <p class="text-blue-600 font-semibold mb-2">Romy Kalengkongan</p>
+       </div>
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-16 h-16 bg-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl">
+         <i class="fas fa-users"></i>
+        </div>
+        <h4 class="text-lg font-bold text-gray-800 mb-2">Kepala Jaga III</h4>
+        <p class="text-blue-600 font-semibold mb-2">Jefry Lonto</p>
+       </div>
+       <div class="structure-card bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-16 h-16 bg-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl">
+         <i class="fas fa-users"></i>
+        </div>
+        <h4 class="text-lg font-bold text-gray-800 mb-2">Kepala Jaga IV</h4>
+        <p class="text-blue-600 font-semibold mb-2">Frangky Sumolang</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Map Page -->
+   <div id="map-page" class="page-content hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+     <div class="fade-in">
+      <div class="text-center mb-12">
+       <h2 class="text-4xl font-bold text-gray-800 mb-4">Peta Desa</h2>
+       <p class="text-xl text-gray-600">Wilayah dan lokasi penting di desa kami</p>
+      </div><!-- Map Container -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+       <div class="p-6">
+        <div class="map-placeholder bg-blue-50 rounded-xl h-96 flex items-center justify-center border-2 border-dashed border-blue-300">
+         <div class="text-center">
+          <div class="text-6xl mb-4">
+           🗺️
+          </div>
+          <h3 class="text-2xl font-bold text-gray-700 mb-2">Peta Desa</h3>
+          <p class="text-gray-600 mb-4">Area untuk menampilkan peta interaktif desa</p>
+          <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg inline-block"><span class="text-sm font-medium">📍 Koordinat: -7.xxxx, 110.xxxx</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Location Points -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🏛️
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Kantor Desa</h3>
+          <p class="text-gray-600 text-sm">Pusat pemerintahan</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🏥
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Puskesmas</h3>
+          <p class="text-gray-600 text-sm">Layanan kesehatan</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🏫
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Sekolah Dasar</h3>
+          <p class="text-gray-600 text-sm">Pendidikan dasar</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🕌
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Masjid</h3>
+          <p class="text-gray-600 text-sm">Tempat ibadah</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🏪
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Pasar Desa</h3>
+          <p class="text-gray-600 text-sm">Pusat perdagangan</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-4">
+         <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white text-xl mr-4">
+          🌾
+         </div>
+         <div>
+          <h3 class="font-bold text-gray-800">Area Pertanian</h3>
+          <p class="text-gray-600 text-sm">Lahan produktif</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Map Instructions -->
+      <div class="mt-8 bg-blue-50 rounded-xl p-6">
+       <h3 class="text-lg font-bold text-blue-800 mb-2">📝 Catatan Peta</h3>
+       <p class="text-blue-700">Area peta di atas dapat diganti dengan peta interaktif yang sesungguhnya. Anda dapat mengintegrasikan dengan Google Maps, OpenStreetMap, atau layanan peta lainnya untuk menampilkan batas wilayah desa dan titik-titik lokasi penting secara detail.</p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Contact Page -->
+   <div id="contact-page" class="page-content hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+     <div class="fade-in">
+      <div class="text-center mb-12">
+       <h2 class="text-4xl font-bold text-gray-800 mb-4">Kontak Kami</h2>
+       <p class="text-xl text-gray-600">Hubungi kami untuk informasi lebih lanjut</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><!-- Contact Info -->
+       <div>
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+         <h3 class="text-2xl font-bold text-gray-800 mb-6">Informasi Kontak</h3>
+         <div class="space-y-6">
+          <div class="flex items-start">
+           <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl mr-4 flex-shrink-0">
+            📍
+           </div>
+           <div>
+            <h4 class="font-semibold text-gray-800 mb-1">Alamat</h4>
+            <p id="contact-address" class="text-gray-600">Jl. Raya Desa No. 123, Kecamatan Maju, Kabupaten Sejahtera, Provinsi Bahagia 12345</p>
+           </div>
+          </div>
+          <div class="flex items-start">
+           <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mr-4 flex-shrink-0">
+            📞
+           </div>
+           <div>
+            <h4 class="font-semibold text-gray-800 mb-1">Telepon</h4>
+            <p id="contact-phone" class="text-gray-600">(021) 1234-5678</p>
+           </div>
+          </div>
+          <div class="flex items-start">
+           <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white text-xl mr-4 flex-shrink-0">
+            ✉️
+           </div>
+           <div>
+            <h4 class="font-semibold text-gray-800 mb-1">Email</h4>
+            <p id="contact-email" class="text-gray-600">info@desamajubersama.id</p>
+           </div>
+          </div>
+          <div class="flex items-start">
+           <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mr-4 flex-shrink-0">
+            🕒
+           </div>
+           <div>
+            <h4 class="font-semibold text-gray-800 mb-1">Jam Pelayanan</h4>
+            <p class="text-gray-600">Senin - Jumat: 08.00 - 16.00 WIB<br>
+             Sabtu: 08.00 - 12.00 WIB</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Contact Form -->
+       <div>
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+         <h3 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h3>
+         <form id="contact-form" class="space-y-6">
+          <div><label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label> <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+          <div><label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label> <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+          <div><label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subjek</label> <input type="text" id="subject" name="subject" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+          </div>
+          <div><label for="message" class="block text-sm font-medium text-gray-700 mb-2">Pesan</label> <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"></textarea>
+          </div><button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition duration-300 transform hover:scale-105"> Kirim Pesan </button>
+         </form>
+         <div id="form-message" class="mt-4 p-4 rounded-lg hidden"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main><!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+     <h3 id="footer-village-name" class="text-2xl font-bold mb-4">Desa Tondegesan Dua</h3>
+     <p class="text-gray-400 mb-4">Bersama membangun masa depan yang lebih baik</p>
+     <div class="flex justify-center space-x-6"><span class="text-gray-400">© 2024 Website Desa. Semua hak dilindungi.</span>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script>
+        // Configuration object
+        const defaultConfig = {
+            village_name: "Desa Maju Bersama",
+            village_tagline: "Bersama Membangun Masa Depan yang Cerah",
+            profile_text: "Desa Maju Bersama adalah sebuah desa yang terletak di wilayah yang strategis dengan pemandangan alam yang indah. Desa ini memiliki potensi besar dalam bidang pertanian, pariwisata, dan ekonomi kreatif. Dengan jumlah penduduk yang terus berkembang, desa ini berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat.",
+            history_text: "Desa ini didirikan pada tahun 1950 oleh para pendatang yang mencari kehidupan yang lebih baik. Awalnya hanya terdiri dari beberapa keluarga, namun seiring berjalannya waktu berkembang menjadi komunitas yang solid. Nama \"Maju Bersama\" dipilih untuk mencerminkan semangat gotong royong dan kemajuan bersama yang menjadi ciri khas masyarakat desa ini.",
+            vision_text: "Menjadi desa yang maju, mandiri, dan sejahtera dengan tetap menjaga nilai-nilai budaya lokal dan kelestarian lingkungan.",
+            mission_text: "Meningkatkan kesejahteraan masyarakat melalui pembangunan infrastruktur, pengembangan ekonomi lokal, dan peningkatan kualitas sumber daya manusia.",
+            village_address: "Jl. Raya Desa No. 123, Kecamatan Maju, Kabupaten Sejahtera, Provinsi Bahagia 12345",
+            village_phone: "(021) 1234-5678",
+            village_email: "info@desamajubersama.id"
+        };
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('fade-in');
+            }
+
+            // Update desktop navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-white', 'bg-blue-600');
+                link.classList.add('text-gray-600', 'hover:text-blue-600', 'hover:bg-blue-50');
+            });
+
+            // Update mobile navigation
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.classList.remove('text-white', 'bg-blue-600');
+                link.classList.add('text-gray-600', 'hover:text-blue-600', 'hover:bg-blue-50');
+            });
+
+            // Find and activate current nav links
+            const currentDesktopLink = document.querySelector(`.nav-link[onclick="showPage('${pageId}')"]`);
+            if (currentDesktopLink) {
+                currentDesktopLink.classList.remove('text-gray-600', 'hover:text-blue-600', 'hover:bg-blue-50');
+                currentDesktopLink.classList.add('text-white', 'bg-blue-600');
+            }
+
+            const currentMobileLink = document.querySelector(`.mobile-nav-link[onclick*="showPage('${pageId}')"]`);
+            if (currentMobileLink) {
+                currentMobileLink.classList.remove('text-gray-600', 'hover:text-blue-600', 'hover:bg-blue-50');
+                currentMobileLink.classList.add('text-white', 'bg-blue-600');
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('form-message');
+            messageDiv.className = 'mt-4 p-4 rounded-lg bg-green-100 text-green-800';
+            messageDiv.textContent = 'Terima kasih! Pesan Anda telah dikirim. Kami akan segera menghubungi Anda.';
+            messageDiv.classList.remove('hidden');
+            
+            // Reset form
+            this.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Mobile menu button event
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Element SDK implementation
+        async function onConfigChange(config) {
+            // Update village name in multiple places
+            const villageName = config.village_name || defaultConfig.village_name;
+            document.getElementById('nav-village-name').textContent = villageName;
+            document.getElementById('hero-village-name').textContent = villageName;
+            document.getElementById('footer-village-name').textContent = villageName;
+
+            // Update tagline
+            const tagline = config.village_tagline || defaultConfig.village_tagline;
+            document.getElementById('hero-tagline').textContent = tagline;
+
+            // Update content
+            const profileText = config.profile_text || defaultConfig.profile_text;
+            document.getElementById('profile-content').textContent = profileText;
+
+            const historyText = config.history_text || defaultConfig.history_text;
+            document.getElementById('history-content').textContent = historyText;
+
+            const visionText = config.vision_text || defaultConfig.vision_text;
+            document.getElementById('vision-content').textContent = visionText;
+
+            const missionText = config.mission_text || defaultConfig.mission_text;
+            document.getElementById('mission-content').innerHTML = missionText;
+
+            // Update contact info
+            const address = config.village_address || defaultConfig.village_address;
+            document.getElementById('contact-address').textContent = address;
+
+            const phone = config.village_phone || defaultConfig.village_phone;
+            document.getElementById('contact-phone').textContent = phone;
+
+            const email = config.village_email || defaultConfig.village_email;
+            document.getElementById('contact-email').textContent = email;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["village_name", config.village_name || defaultConfig.village_name],
+                ["village_tagline", config.village_tagline || defaultConfig.village_tagline],
+                ["profile_text", config.profile_text || defaultConfig.profile_text],
+                ["history_text", config.history_text || defaultConfig.history_text],
+                ["vision_text", config.vision_text || defaultConfig.vision_text],
+                ["mission_text", config.mission_text || defaultConfig.mission_text],
+                ["village_address", config.village_address || defaultConfig.village_address],
+                ["village_phone", config.village_phone || defaultConfig.village_phone],
+                ["village_email", config.village_email || defaultConfig.village_email]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'995f4f99f61a8228',t:'MTc2MTcwNTY1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
